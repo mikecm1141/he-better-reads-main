@@ -1,6 +1,28 @@
 RSpec.describe '/api/books/:book_id/reviews' do
   let(:response_hash) { JSON(response.body, symbolize_names: true) }
 
+  describe 'GET to /' do
+    it 'returns all reviews for a given book' do
+      review = create(:review)
+
+      get api_book_reviews_path(review.book)
+
+      expect(response_hash).to eq(
+        [
+          {
+            id: review.id,
+            user_id: review.user_id,
+            book_id: review.book_id,
+            rating: review.rating,
+            description: review.description,
+            created_at: review.created_at.iso8601(3),
+            updated_at: review.updated_at.iso8601(3),
+          },
+        ],
+      )
+    end
+  end
+
   describe 'POST to /' do
     let(:book) { create(:book) }
     let(:user) { create(:user) }

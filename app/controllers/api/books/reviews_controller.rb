@@ -12,6 +12,12 @@ module API
         end
       end
 
+      def index
+        book = find_book
+
+        render json: book.reviews
+      end
+
       private
 
       def find_book
