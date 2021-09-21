@@ -24,6 +24,22 @@ RSpec.describe '/api/books/:book_id/reviews' do
 
         expect(response_hash).to include(params)
       end
+
+      context 'with an optional review description' do
+        let(:params) do
+          {
+            rating: 4,
+            description: 'A positive review for a great book.',
+            user_id: user.id,
+          }
+        end
+
+        it 'returns the created book review with description' do
+          post api_book_reviews_path(book), params: params
+
+          expect(response_hash).to include(description: 'A positive review for a great book.')
+        end
+      end
     end
   end
 end
