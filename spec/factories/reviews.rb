@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :review do
     book
     user
-    rating { 1 }
+    rating { rand(Review::VALID_RATING_RANGE) }
     description { nil }
   end
 end
