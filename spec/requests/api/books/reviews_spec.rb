@@ -35,6 +35,12 @@ RSpec.describe '/api/books/:book_id/reviews' do
         }
       end
 
+      it 'returns a 201 created status code' do
+        post api_book_reviews_path(book), params: params
+
+        expect(response).to have_http_status(:created)
+      end
+
       it 'creates a review for a book' do
         expect do
           post api_book_reviews_path(book), params: params
@@ -65,6 +71,17 @@ RSpec.describe '/api/books/:book_id/reviews' do
     end
 
     context 'when unsuccessful' do
+      it 'returns a 422 unprocessable entity status code' do
+        params = {
+          rating: 3,
+          user_id: nil,
+        }
+
+        post api_book_reviews_path(book), params: params
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
       context 'when missing a user ID' do
         let(:params) do
           {
