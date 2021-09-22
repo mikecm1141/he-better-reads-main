@@ -205,6 +205,22 @@ RSpec.describe '/api/books/:book_id/reviews' do
           expect(response_hash).to eq(errors: ['User can only review a book once'])
         end
       end
+
+      context 'when description contains profanity' do
+        let(:params) do
+          {
+            user_id: user.id,
+            rating: 1,
+            description: 'This book is lame. The author sucks.',
+          }
+        end
+
+        it 'returns an error' do
+          post api_book_reviews_path(book), params: params
+
+          expect(response_hash).to eq(errors: ['Description contains disallowed terms: lame and sucks'])
+        end
+      end
     end
   end
 end

@@ -12,4 +12,16 @@ class Review < ApplicationRecord
     less_than_or_equal_to: VALID_RATING_RANGE.max,
     only_integer: true,
   }
+  validate :no_profanity_in_description
+
+  private
+
+  def no_profanity_in_description
+    return if description.blank?
+
+    profanity_filter = ProfanityFilter.new(description)
+    return if profanity_filter.clean?
+
+    errors.add(:description, "contains disallowed terms: #{profanity_filter.filtered_terms.to_sentence}")
+  end
 end
