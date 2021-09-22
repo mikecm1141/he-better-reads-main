@@ -7,7 +7,8 @@ RSpec.describe Review do
   describe 'validations' do
     subject { build(:review) }
 
-    it { should validate_presence_of :user_id  }
+    it { should validate_presence_of :user_id }
+    it { should validate_presence_of :rating }
 
     it do
       should validate_uniqueness_of(:user_id).

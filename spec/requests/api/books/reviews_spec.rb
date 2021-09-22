@@ -111,6 +111,21 @@ RSpec.describe '/api/books/:book_id/reviews' do
       end
 
       context 'with an invalid rating' do
+        context 'with a missing rating' do
+          let(:params) do
+            {
+              rating: nil,
+              user_id: user.id,
+            }
+          end
+
+          it 'returns an error' do
+            post api_book_reviews_path(book), params: params
+
+            expect(response_hash).to include(errors: include('Rating can\'t be blank'))
+          end
+        end
+
         context 'with a non-whole number rating' do
           let(:params) do
             {
