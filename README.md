@@ -58,13 +58,13 @@ Live URL: [https://he-better-reads.herokuapp.com/api/books/1/reviews](https://he
 
 ##### Required Fields
 
-`rating` - must be a whole number between 1 and 5 inclusive
+`rating` - must be a whole number between 1 and 5 inclusive.
 
-`user_id` - must be a valid, existing user
+`user_id` - must be a valid, existing user. Given user can only review given book once.
 
 ##### Optional Fields
 
-`description` - cannot contain profanity
+`description` - cannot contain profanity.
 
 ##### Example Request
 
